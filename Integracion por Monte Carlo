@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+
+\title{INTRODUCCIÓN A LA MODELIZACIÓN EN FÍSICA\\
+INTEGRACIÓN POR MONTE CARLO}
+\author{DAVID GONZÁLEZ MOLERO}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{INTRODUCCIÓN}
+En esta práctica utilizaremos el método de Monte Carlo para calcular el valor bajo la curva de cualquier función. Veremos que este método es bastante cómodo para este tipo de casos, pero que tiene ciertos límites.
+
+\section*{RESULTADOS}
+
+\subsection*{Valor de la integral y error}
+Vamos a inicializar el programa tomando como máximo de la función, el valor $M = 1.1$, que es precisamente un poco más que el valor real máximo de la función. Además, emplearemos $10^5$ pasos de Monte Carlo ($n_{total}$).
+
+\subsubsection*{Gráfica de la función y valor teórico de su integral.}
+El valor de la integral lo hemos calculado implementando la función \texttt{quad} al código. Obteniendo un valor de $1.4517$ unidades$^2$.
+
+\subsubsection*{Valor de la integral mediante Monte Carlo y representación}
+Para el número de pasos comentado anteriormente, el valor de la integral que obtenemos es $1.4477$ unidades$^2$. Podemos observar que el valor de la integral coincide bastante bien con el valor teórico. Si calculamos el error relativo:
+$$r = \frac{\text{VALOR TEÓRICO} - \text{VALOR MC}}{\text{VALOR TEÓRICO}} = \frac{1.4517 - 1.4477}{1.4517} = 0.28\%$$
+Como podemos ver, el error relativo es muy bajo, por lo que podemos decir que nuestro resultado es realmente bueno.
+
+A continuación, mostraremos la gráfica de la función junto con los valores aceptados y no aceptados del método de Monte Carlo.
+\vspace{0.5cm}
+\begin{center}
+    [Gráfica de la función con puntos aceptados y no aceptados]
+\end{center}
+\vspace{0.5cm}
+
+\subsection*{Comparación para diferentes valores de $M$ y $n_{total}$}
+Hemos llamado $M$ al máximo de la función y $n_{total}$ al número de pasos Monte Carlo. Variaremos estos valores y observaremos qué ocurre con el valor de la integral. Para ello, realizaremos una tabla en la que podremos mostrar cada uno de los valores obtenidos para diferentes valores de $M$ y $n_{total}$.
+
+\subsubsection*{Para $n_{total}= 10^5$}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Máximo de la función ($M$)} & \textbf{Valor de la integral} & \textbf{Error relativo} \\
+        \hline
+        $0.7$ & $1.228626$ & $15.47\%$ \\
+        $1.1$ & $1.4477$ & $0.28\%$ \\
+        $1.5$ & $1.46034$ & $0.6\%$ \\
+        \hline
+    \end{tabular}
+    \caption{Comparación variando el máximo ($M$).}
+\end{table}
+
+Podemos observar que es importante ajustar bien el máximo de nuestra función ya que esto va a afectar en gran medida, evidentemente, a nuestro valor de la integral.
+
+\subsubsection*{Para $M= 1.1$}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Número de pasos ($n_{total}$)} & \textbf{Valor de la integral} & \textbf{Error relativo} \\
+        \hline
+        $10^3$ & $1.4850000000000003$ & $2.29\%$ \\
+        $10^5$ & $1.4477$ & $0.28\%$ \\
+        $10^7$ & $1.45145286$ & $0.017\%$ \\
+        \hline
+    \end{tabular}
+    \caption{Comparación variando el número de pasos ($n_{total}$).}
+\end{table}
+
+El valor se acerca considerablemente más a medida que aumentamos el número de pasos de Monte Carlo, por lo que ganamos precisión en nuestro cálculo, a cambio de perder tiempo en nuestro tiempo de cálculo.
+
+\section*{EXTRAS:}
+
+\subsection*{Método de integración de Monte Carlo para una función difícilmente integrable de forma analítica}
+Hemos tomado la función
+$$f(x)=e^{-x^2}$$
+Cuya integral es prácticamente el valor $2$ (salvo por un valor de la función $\text{erf}(2)$ que es próximo a $1$), esto es $0.8821$.
+
+Con el método de Monte Carlo obtenemos un valor de $0.885045$, por lo que hemos calculado una integral complicada de resolver de forma analítica con un error relativo de $0.336\%$.
+
+Por lo que podemos apreciar la potencia del método: podemos calcular el valor de cualquier integral, sea o no resoluble analíticamente y, además, de una forma bastante precisa. Esto provoca que el método de Monte Carlo sea muy utilizado en sistemas simulados en física.
+
+\subsection*{Volumen de una hiperesfera en 10D}
+En el código también hemos implementado una función capaz de obtener el volumen de una esfera de $N$ dimensiones. Este valor lo podemos comparar con la fórmula general para el volumen de una esfera:
+$$V_N(R)=\frac{\pi^{N/2}}{\Gamma(N/2+1)}R^N$$
+Para $N=10$ tenemos que $V=2.55016$. Haciendo el cálculo mediante Monte Carlo y dándole un elevado número de pasos ($10^7$), hemos conseguido un volumen de $2.55119$. Es decir, hemos podido calcular el volumen con un error relativo de $0.04\%$.
+
+\section*{CONCLUSIÓN}
+Como pequeña conclusión, podemos apreciar que el método de Monte Carlo es muy potente para el cálculo de cualquier integral y volumen. Aun usando valores aleatorios, es capaz de obtener precisiones que escalan con un factor $\sqrt{N}$ (implícito en el texto), a cambio de un costo computacional.
+
+\end{document}
